@@ -3,7 +3,7 @@ from fastapi.openapi.utils import get_openapi
 
 from TodoApp.company import companyapis, dependencies
 from TodoApp.database import engine
-from TodoApp.routers import auth, todos
+from TodoApp.routers import auth, todos, users
 from TodoApp import models
 
 app = FastAPI(title="Todo API", version="1.0.0",
@@ -13,6 +13,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app.include_router(auth.router)
 app.include_router(todos.router)
+app.include_router(users.router)
 app.include_router(companyapis.router, prefix="/companyapis", tags=["companyapis"],
                    dependencies=[Depends(dependencies.get_token_header)],
                    responses={401: {"description": "For internal use only"}})
