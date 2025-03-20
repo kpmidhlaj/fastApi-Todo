@@ -26,7 +26,8 @@ class CreateUser(BaseModel):
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(prefix="/auth", tags=["auth"],
+                   responses={401: {"user": "Not authenticated"}})
 
 
 def get_password_hash(password):

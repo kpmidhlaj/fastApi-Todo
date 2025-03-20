@@ -6,7 +6,8 @@ from TodoApp.database import get_db
 from TodoApp.models import Todo
 from TodoApp.routers.auth import get_current_user, get_user_exception
 
-router = APIRouter(prefix="/todos", tags=["todos"])
+router = APIRouter(prefix="/todos", tags=["todos"],
+                   responses={401: {"description": "Not Found"}})
 
 
 class TodoRequest(BaseModel):
