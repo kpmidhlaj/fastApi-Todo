@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
+
+from TodoApp.company import companyapis
 from TodoApp.database import engine
 from TodoApp.routers import auth, todos
 from TodoApp import models
@@ -11,6 +13,8 @@ models.Base.metadata.create_all(bind=engine)
 
 app.include_router(auth.router)
 app.include_router(todos.router)
+app.include_router(companyapis.router, prefix="/companyapis", tags=["companyapis"],
+                   responses={401: {"description": "For internal use only"}})
 
 
 @app.get("/check_server")
