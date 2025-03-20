@@ -13,9 +13,9 @@ app.include_router(auth.router)
 app.include_router(todos.router)
 
 
-@app.get("/")
-async def root():
-    return {"message": "Welcome to the Todo API!"}
+@app.get("/check_server")
+async def check_server():
+    return {"message": "Server is running"}
 
 
 def custom_openapi():
