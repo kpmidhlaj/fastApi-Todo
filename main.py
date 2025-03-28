@@ -39,6 +39,12 @@ def custom_openapi():
         description="API for managing todos",
         routes=app.routes
     )
+    if "components" not in openapi_schema:
+        openapi_schema["components"] = {}
+
+    if "securitySchemes" not in openapi_schema["components"]:
+        openapi_schema["components"]["securitySchemes"] = {}
+
     openapi_schema["components"]["securitySchemes"]["OAuth2PasswordBearer"] = {
         "type": "http",
         "scheme": "bearer",
