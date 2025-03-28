@@ -19,11 +19,12 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
 async def read_all_by_user(request: Request, db: Session = Depends(get_db)):
-    user = await  get_current_user(request)
-    if user is None:
-        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    user = await get_current_user(request)
+    if isinstance(user, RedirectResponse):
+        return user
     todos = db.query(Todo).filter(Todo.owner_id == user.get("id")).all()
-    return templates.TemplateResponse("home.html", {"request": request, "todos": todos,"user":user})
+    return templates.TemplateResponse("home.html", {"request": request, "todos": todos,
+                                                    "user": user})
 
 
 @router.get('/add-todo', response_class=HTMLResponse)

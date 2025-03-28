@@ -95,11 +95,10 @@ async def get_current_user(request: Request):
         username: str = payload.get("sub")
         user_id: int = payload.get("id")
         if username is None or user_id is None:
-            await logout(request)
+            return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
         return {"username": username, "id": user_id}
     except JWTError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Could not validate credentials")
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
 
 
 # @router.post("/create_user", status_code=status.HTTP_201_CREATED)
